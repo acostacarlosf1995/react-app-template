@@ -4,6 +4,12 @@ import Persons from '../components/Persons/Persons';
 import Cockpit from '../components/Cockpit/Cockpit';
 
 class App extends Component {
+
+  constructor(props) {
+    super(props);
+    console.log("[App.js] constructor (Usually for set the initial state)");
+  }
+
   state = {
     persons: [
       { id: 'afsa1', name: "Carlos", age: 24 },
@@ -13,11 +19,20 @@ class App extends Component {
     showPersons: false
   }
 
+  static getDerivedStateFromProps(props, state)  {
+    console.log("[Apa.js] getDerivedStateFromProps (Normaly never used)", props);
+    return state;
+  }
+
   deletePersonHandler = (personIndex) => {
     // const persons = this.state.persons.slice();
     const persons = [...this.state.persons];
     persons.splice(personIndex, 1);
     this.setState({ persons: persons });
+  }
+
+  componentDidMount() {
+    console.log("[App.js] componentDidMount (Good for Http request and APIs)")
   }
 
   nameChangeHandler = (event, id) => {
@@ -44,13 +59,15 @@ class App extends Component {
 
   render() {
 
-    const style = {
-      backgroudColor: 'white',
-      font: 'inherit',
-      border: '1px solid blue',
-      padding: '8px',
-      cursor: 'pointer'
-    };
+    console.log("[App.js] render");
+
+    // const style = {
+    //   backgroudColor: 'white',
+    //   font: 'inherit',
+    //   border: '1px solid blue',
+    //   padding: '8px',
+    //   cursor: 'pointer'
+    // };
 
     let persons = null;
 
@@ -64,10 +81,12 @@ class App extends Component {
 
     return (
       <div className="App">
-        <h1>Hi</h1>
-        <button
-            onClick={this.togglePersonsHandler}>Toggle persons
-        </button>
+        <Cockpit 
+          title={this.props.appTitle}
+          showPersons={this.state.showPersons}
+          persons={this.state.persons}
+          clicked={this.togglePersonsHandler}
+        />
         {persons}
       </div>
     );

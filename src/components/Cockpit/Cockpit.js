@@ -1,11 +1,11 @@
 import React from 'react';
 
-const cockpit = () => {
+const cockpit = (props) => {
     return (
         <div>
-            <h1>Hi</h1>
+            <h1>{props.title}</h1>
             <button
-                onClick={this.togglePersonsHandler}>Toggle persons
+                onClick={props.clicked}>Toggle persons
             </button>
         </div>
     );
